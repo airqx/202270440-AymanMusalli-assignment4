@@ -1,8 +1,9 @@
-const API_URL = "https://two02270440-aymanmusalli-assignment02.onrender.com/api/chat";
+const API_URL =
+  "https://two02270440-aymanmusalli-assignment02.onrender.com/api/chat";
 
 const messagesContainer = document.getElementById("aiChatMessages");
-const input = document.getElementById("aiInput");
-const sendBtn = document.getElementById("aiSendBtn");
+const chatInput = document.getElementById("aiInput");
+const sendButton = document.getElementById("aiSendBtn");
 const chatForm = document.getElementById("aiChatForm");
 const suggestionsContainer = document.getElementById("aiSuggestions");
 
@@ -11,41 +12,34 @@ let chatHistory = [];
 function addMessage(text, sender = "bot") {
   if (!messagesContainer) return;
 
-  const msg = document.createElement("div");
-  msg.className = `ai-message ai-message-${sender}`;
+  const messageElement = document.createElement("div");
+  messageElement.className = `ai-message ai-message-${sender}`;
 
-  const content = document.createElement("div");
-  content.className = "ai-message-content";
+  const contentElement = document.createElement("div");
+  contentElement.className = "ai-message-content";
+  contentElement.innerHTML = formatMessage(text);
 
-  // Handle basic formatting
-  const formattedText = formatMessage(text);
-  content.innerHTML = formattedText;
-
-  msg.appendChild(content);
-  messagesContainer.appendChild(msg);
+  messageElement.appendChild(contentElement);
+  messagesContainer.appendChild(messageElement);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 function formatMessage(text) {
-  // Escape HTML first
-  const escaped = text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+  const escapedText = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 
-  // Handle line breaks
-  const withBreaks = escaped.replace(/\n/g, '<br>');
+  const textWithBreaks = escapedText.replace(/\n/g, "<br>");
+  const textWithBold = textWithBreaks.replace(
+    /\*\*(.*?)\*\*/g,
+    "<strong>$1</strong>"
+  );
+  const textWithBullets = textWithBold.replace(/^- (.+)$/gm, "<li>$1</li>");
 
-  // Handle bold text **text**
-  const withBold = withBreaks.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-  // Handle bullet points
-  const withBullets = withBold.replace(/^- (.+)$/gm, '<li>$1</li>');
-  const withList = withBullets.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
-
-  return withList;
+  return textWithBullets.replace(/(<li>.*<\/li>\n?)+/g, "<ul>$&</ul>");
 }
 
 function handleActions(text) {
@@ -54,10 +48,11 @@ function handleActions(text) {
 
   scrollMatches.forEach((match) => {
     const id = match[1]?.trim();
-    const el = document.getElementById(id);
-    if (el) {
+    const targetElement = document.getElementById(id);
+
+    if (targetElement) {
       setTimeout(() => {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 200);
     }
   });
@@ -77,37 +72,27 @@ function handleActions(text) {
 }
 
 function setLoading(isLoading) {
-  if (!sendBtn || !input) return;
+  if (!sendButton || !chatInput) return;
 
-  sendBtn.disabled = isLoading;
-  input.disabled = isLoading;
-
-  if (isLoading) {
-    sendBtn.textContent = "...";
-  } else {
-    sendBtn.textContent = "Send";
-  }
+  sendButton.disabled = isLoading;
+  chatInput.disabled = isLoading;
+  sendButton.textContent = isLoading ? "..." : "Send";
 }
 
 async function sendMessage(customMessage = null) {
-  if (!input || !messagesContainer) return;
+  if (!chatInput || !messagesContainer) return;
 
-  const message = (customMessage ?? input.value).trim();
+  const message = (customMessage ?? chatInput.value).trim();
   if (!message) return;
 
   addMessage(message, "user");
   chatHistory.push({ role: "user", content: message });
-
-  if (!customMessage) {
-    input.value = "";
-  } else {
-    input.value = "";
-  }
+  chatInput.value = "";
 
   setLoading(true);
 
   try {
-    const res = await fetch(API_URL, {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -118,15 +103,15 @@ async function sendMessage(customMessage = null) {
       }),
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
-if (!res.ok) {
-  console.error("Backend response error:", data);
-  addMessage(data.details || data.error || "Something went wrong.", "bot");
-  return;
-}
+    if (!response.ok) {
+      console.error("Backend response error:", data);
+      addMessage(data.details || data.error || "Something went wrong.", "bot");
+      return;
+    }
 
-let reply = data.reply || "Something went wrong.";
+    const reply = data.reply || "Something went wrong.";
     const cleanReply = handleActions(reply);
 
     addMessage(cleanReply, "bot");
@@ -136,44 +121,48 @@ let reply = data.reply || "Something went wrong.";
     addMessage("Sorry, I couldn’t connect right now.", "bot");
   } finally {
     setLoading(false);
-    input.focus();
+
+    if (chatInput) {
+      chatInput.focus();
+    }
   }
 }
 
 if (chatForm) {
-  chatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  chatForm.addEventListener("submit", (event) => {
+    event.preventDefault();
     sendMessage();
   });
 }
 
-if (sendBtn) {
-  sendBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+if (sendButton) {
+  sendButton.addEventListener("click", (event) => {
+    event.preventDefault();
     sendMessage();
   });
 }
 
-if (input) {
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
+if (chatInput) {
+  chatInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
       sendMessage();
     }
   });
 }
 
 if (suggestionsContainer) {
-  suggestionsContainer.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-query]");
-    if (!btn) return;
+  suggestionsContainer.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-query]");
+    if (!button) return;
 
-    const prompt = btn.getAttribute("data-query");
+    const prompt = button.getAttribute("data-query");
     if (!prompt) return;
 
     sendMessage(prompt);
   });
 }
-// expose functions for script.js
+
+// Expose helper functions for other scripts if needed
 window.sendAIMessage = sendMessage;
 window.addAIBotMessage = addMessage;
