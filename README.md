@@ -1,7 +1,7 @@
 # Personal Portfolio Website – Assignment 2
 
 ## 🌐 Live Demo
-🔗 [https://portfolio-ayman0969.netlify.app/](https://portifolio-ayman1069.netlify.app/)
+🔗(https://portifolio-ayman1069.netlify.app/)
 
 ---
 
