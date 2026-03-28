@@ -1,22 +1,23 @@
-# Personal Portfolio Website – Assignment 1
+# Personal Portfolio Website – Assignment 2
 
 ## 🌐 Live Demo
-🔗 [https://portfolio-ayman0969.netlify.app/]
+🔗 [https://portfolio-ayman0969.netlify.app/](https://portifolio-ayman1069.netlify.app/)
 
 ---
 
 ## 📌 Overview
 
-This project is a fully responsive personal portfolio website built using **HTML, CSS, and Vanilla JavaScript**.
+This project is an enhanced version of the Assignment 1 portfolio website, extended with interactive features, improved user experience, and backend integration.
 
-It showcases my projects, skills, and contact information, while implementing interactive UI/UX features such as dark/light mode, animations, and a typing mini-game.
+It showcases my projects, skills, and contact information while introducing an AI-powered assistant and more advanced UI interactions.
 
 The goal of this assignment was to demonstrate:
-- Clean semantic HTML structure  
-- Responsive CSS layout  
 - Interactive JavaScript features  
+- Improved UI/UX behavior  
+- Frontend-backend integration  
+- Clean and maintainable code  
 - Organized project structure  
-- Proper documentation  
+- Proper technical and AI documentation  
 
 ---
 
@@ -25,13 +26,13 @@ The goal of this assignment was to demonstrate:
 ### 🧩 Sections Included
 - Home (Hero Section)
 - About
-- Projects (3 project cards)
+- Projects
 - Skills
 - Contact
 - Footer
 
 ### 🎨 UI / UX Features
-- Dark / Light theme toggle (saved using `localStorage`)
+- Dark / Light theme toggle (saved using localStorage)
 - Smooth scrolling navigation
 - Active navbar link highlighting
 - Scroll reveal animations
@@ -40,77 +41,90 @@ The goal of this assignment was to demonstrate:
 - Back-to-top button
 - Cursor glow effect (desktop only)
 - Time-based greeting message
+- Toast notification system
 
-### 🎮 Extra Interactive Feature
-- **Code Typing Challenge**
-  - 30-second typing game
-  - Real-time score tracking
-  - Words per minute (WPM) calculation
-  - Anti-paste protection
+### 🎮 Interactive Features
+
+#### Code Typing Challenge
+- 30-second typing game  
+- Real-time score tracking  
+- Words per minute (WPM) calculation  
+- Anti-paste protection  
+- Restart functionality  
+
+### 🤖 AI Assistant (NEW)
+
+- Chat-based assistant integrated into the portfolio  
+- Answers questions about my skills, projects, and experience  
+- Supports smart actions:
+  - Scroll to sections → [SCROLL:section]
+  - Download CV → [ACTION:download-cv]
+- Maintains short chat history for better responses  
+- Displays formatted responses (lists, bold text, etc.)
 
 ### 📩 Contact Form
-- Front-end validation
-- Toast success message
-- Form reset after submission
+- Front-end validation  
+- Toast success message  
+- Form reset after submission  
 
 ---
 
 ## 🛠️ Technologies Used
 
-- **HTML5** – Semantic structure  
-- **CSS3** – Custom variables, Flexbox, animations, responsive design  
-- **JavaScript (Vanilla JS)** – DOM manipulation, events, localStorage, IntersectionObserver  
-- **Netlify** – Deployment  
+### Frontend
+- HTML5 – Semantic structure  
+- CSS3 – Custom variables, Flexbox, Grid, animations  
+- JavaScript (Vanilla JS) – DOM manipulation, events, localStorage, IntersectionObserver  
+
+### Backend
+- Node.js (Express) – API server  
+- REST API – Chat endpoint  
+
+### External API
+- Mistral API – AI assistant responses  
+
+### Deployment
+- Netlify – Frontend hosting  
+- Render – Backend hosting  
 
 ---
 
-```
 ## 📂 Project Structure
 
-202270440-AymanMusalli-assignment1/
+assignment-2/
 ├── index.html
 ├── css/
 │   └── styles.css
 ├── js/
-│   └── script.js
+│   ├── script.js
+│   └── chat.js
+├── backend/
+│   └── server.js
 ├── assets/
 │   └── images/
-│       ├── profile.jpg
-│       ├── project1.jpg
-│       ├── project2.jpg
-│       ├── project3.jpg
-│       └── favicon.jpg
-├── resume.pdf
-└── docs/
-    ├── ai-usage-report.md
-    └── technical-documentation.md
-```
----
-
+├── docs/
+│   ├── ai-usage-report.md
+│   └── technical-documentation.md
+└── .gitignore
 
 ---
 
 ## 📥 How to Clone and Run Locally
 
 ### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/airqx/202270440-AymanMusalli-assignment1.git
-```
-2️⃣ Navigate into the project folder
-```
-cd 202270440-AymanMusalli-assignment1
-```
+git clone https://github.com/airqx/202270440-AymanMusalli-assignment2.git
 
-3️⃣ Open the project
-You can open index.html directly in your browser.
+### 2️⃣ Navigate into the project folder
+cd 202270440-AymanMusalli-assignment2
 
-OR (recommended):
+### 3️⃣ Run the frontend
+Open index.html directly in your browser  
+OR use Live Server (recommended)
 
-Open the project in VS Code
-
-Right click index.html
-
-Select Open with Live Server
+### 4️⃣ Run the backend
+cd backend  
+npm install  
+node server.js  
 
 ---
 
@@ -118,49 +132,56 @@ Select Open with Live Server
 
 The website is fully responsive and optimized for multiple screen sizes:
 
-- 🖥️ **Desktop**
-- 📱 **Tablet**
-- 📲 **Mobile**
+- Desktop  
+- Tablet  
+- Mobile  
 
 ### Implementation Details
 
-- Flexible layout using **Flexbox**
-- Responsive breakpoints using **media queries**
-- Adaptive typography and spacing for improved readability
-- Mobile-friendly navigation with hamburger menu
+- Flexible layout using Flexbox  
+- Responsive breakpoints using media queries  
+- Adaptive spacing and typography  
+- Mobile navigation with hamburger menu  
 
 ---
 
 ## 🧠 JavaScript Functionalities Implemented
 
-The project includes the following interactive features:
+- Theme toggle (persistent using localStorage)  
+- Dynamic greeting  
+- Animated counters  
+- Scroll reveal animations  
+- Active navigation tracking  
+- Typing mini-game  
+- Contact form validation  
+- Back-to-top button  
+- AI assistant interaction  
 
-- 🌙 **Theme Toggle**  
-  Persistent dark/light mode using `localStorage`
+---
 
-- ⏰ **Dynamic Greeting**  
-  Displays greeting based on current time of day
+## 🔌 Backend & API
 
-- 🔢 **Animated Counters**  
-  Hero statistics animate when visible
+- Express server handles /api/chat requests  
+- Validates input and manages chat history  
+- Sends requests to Mistral API  
+- Returns formatted responses to frontend  
 
-- 👀 **Scroll Reveal Animations**  
-  Implemented using `IntersectionObserver`
+---
 
-- 🧭 **Active Navbar Tracking**  
-  Highlights current section while scrolling
+## 🔒 Security
 
-- 🎮 **Typing Mini-Game**  
-  - 30-second timer  
-  - Real-time scoring  
-  - Words Per Minute (WPM) calculation  
-  - Basic anti-paste protection  
+- API key stored in environment variables  
+- .env file excluded from GitHub  
+- No sensitive data exposed in frontend  
 
-- 📩 **Contact Form Validation**  
-  Front-end validation with success toast notification
+---
 
-- ⬆️ **Back-to-Top Button**  
-  Smooth scrolling behavior
+## ⚡ Performance
+
+- Lightweight (no frameworks used)  
+- Efficient DOM updates  
+- IntersectionObserver for animations  
+- Limited chat history for faster responses  
 
 ---
 
@@ -168,36 +189,36 @@ The project includes the following interactive features:
 
 AI tools were used responsibly during development for:
 
-- Debugging JavaScript logic
-- Improving UI/UX structure
-- Suggesting animation improvements
-- Assisting with documentation formatting
+- Debugging JavaScript logic  
+- Improving code structure and quality  
+- Assisting with backend integration  
+- Supporting deployment setup  
+- Enhancing documentation  
 
 All AI-generated suggestions were:
-- Carefully reviewed
-- Tested in the browser
-- Modified when necessary to match assignment requirements
+- Carefully reviewed  
+- Tested in the browser  
+- Modified to match assignment requirements  
 
-📄 Full explanation available in:
-docs/ai-usage-report.md
+Full explanation available in: docs/ai-usage-report.md  
+
 ---
 
 ## 📜 License
 
-This project was created for academic purposes as part of **Assignment 1**.
+This project was created for academic purposes as part of Assignment 2.
 
 ---
 
 ## 👤 Author
 
-**Ayman Musalli**  
+Ayman Musalli  
 Software Engineering Student  
 Dhahran, Saudi Arabia  
 
-- 🐙 GitHub: https://github.com/airqx  
-- 💼 LinkedIn: https://www.linkedin.com/in/ayman-musalli-5255981b5/
+GitHub: https://github.com/airqx  
+LinkedIn: https://www.linkedin.com/in/ayman-musalli-5255981b5/
 
 ---
 
 © 2026 Ayman Musalli. All rights reserved.
-
