@@ -112,7 +112,7 @@ assignment-2/
 ## 📥 How to Clone and Run Locally
 
 ### 1️⃣ Clone the repository
-git clone https://github.com/airqx/202270440-AymanMusalli-assignment2.git
+git clone https://github.com/airqx/202270440-AymanMusalli-Assignment2.git
 
 ### 2️⃣ Navigate into the project folder
 cd 202270440-AymanMusalli-assignment2
