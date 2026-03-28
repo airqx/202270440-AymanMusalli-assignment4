@@ -1,376 +1,228 @@
-# Technical Documentation – Assignment 1  
-Personal Portfolio Website
+# Technical Documentation – Assignment 2  
+Personal Portfolio Website (Interactive Version)
 
 ---
 
 ## 1️⃣ Project Overview
 
-This project is a fully responsive personal portfolio website built using **HTML5, CSS3, and Vanilla JavaScript (ES6+)**.
+This project is an enhanced version of the Assignment 1 portfolio website, extended with additional interactivity, improved user experience, and backend integration.
 
-The objective of this assignment was to demonstrate:
+The objective of this assignment was to:
 
-- Semantic HTML structure  
-- Responsive layout implementation  
-- JavaScript interactivity  
-- Clean separation of concerns  
-- Organized project structure  
-- Proper technical documentation  
+- Extend the existing portfolio with interactive features  
+- Improve user engagement using JavaScript  
+- Implement dynamic behavior and user feedback  
+- Maintain clean and structured code  
+- Integrate AI-assisted features  
+- Preserve responsive design and accessibility  
 
-The website includes multiple sections (Home, About, Projects, Skills, Contact) along with dynamic UI features such as theme switching, animations, and a typing mini-game.
+The final website includes dynamic UI features such as animations, a typing game, real-time feedback, and an AI-powered assistant connected to a backend service.
 
 ---
 
-# 2️⃣ Technology Stack
+## 2️⃣ Technology Stack
 
-## Frontend Technologies
+### Frontend Technologies
 
 - **HTML5** – Semantic structure and accessibility  
-- **CSS3** – Responsive styling using Flexbox, Grid, and CSS Variables  
-- **Vanilla JavaScript (ES6+)** – Interactive behavior and DOM manipulation  
+- **CSS3** – Responsive design using Flexbox, Grid, and CSS Variables  
+- **Vanilla JavaScript (ES6+)** – Interactivity and dynamic behavior  
 - **LocalStorage API** – Theme persistence  
 - **IntersectionObserver API** – Scroll-based animations  
 
-## External Resources
+### Backend Technologies
 
-- **Google Fonts** – Typography (Inter & JetBrains Mono)
+- **Node.js (Express)** – Backend server  
+- **REST API** – Chat endpoint (`/api/chat`)  
+- **Environment Variables** – Secure API key management  
 
-No external CSS frameworks (Bootstrap, Tailwind) or JavaScript libraries (React, jQuery) were used.
+### External APIs
+
+- **Mistral API** – AI assistant responses  
+
+### Hosting
+
+- **Netlify** – Frontend deployment  
+- **Render** – Backend deployment  
 
 ---
 
-# 3️⃣ Architecture & File Organization
+## 3️⃣ Architecture & File Organization
 
-## Project Structure
+### Project Structure
 
 ```
-202270440-AymanMusalli-assignment1/
+assignment-2/
 ├── index.html
 ├── css/
 │   └── styles.css
 ├── js/
-│   └── script.js
+│   ├── script.js
+│   └── chat.js
+├── backend/
+│   └── server.js
 ├── assets/
 │   └── images/
-│       ├── profile.jpg
-│       ├── project1.jpg
-│       ├── project2.jpg
-│       ├── project3.jpg
-│       └── favicon.jpg
-├── resume.pdf
-└── docs/
-    ├── ai-usage-report.md
-    └── technical-documentation.md
+├── docs/
+│   ├── ai-usage-report.md
+│   └── technical-documentation.md
+└── .gitignore
 ```
 
-## Separation of Concerns
+### Separation of Responsibilities
 
-| Layer | Responsibility |
-|--------|----------------|
-| HTML | Structure & semantic markup |
-| CSS | Layout, design, responsiveness |
-| JavaScript | Interactivity & dynamic features |
-
-Each file has a clearly defined responsibility to improve maintainability and readability.
+| File | Responsibility |
+|------|----------------|
+| index.html | Structure & layout |
+| styles.css | Design & responsiveness |
+| script.js | UI logic & interactions |
+| chat.js | AI assistant behavior |
+| server.js | Backend API & AI communication |
 
 ---
 
-# 4️⃣ HTML Structure
+## 4️⃣ Frontend Implementation
 
-The HTML file follows semantic best practices.
+### HTML Structure
 
-## Main Sections
+The website uses semantic HTML elements:
 
 ```html
-<nav>        <!-- Sticky navigation -->
-<section>    <!-- Hero -->
-<section>    <!-- About -->
-<section>    <!-- Projects -->
-<section>    <!-- Skills -->
-<section>    <!-- Contact -->
-<footer>     <!-- Footer -->
+<nav>
+<section>
+<footer>
 ```
 
-## Key Implementation Decisions
-
-- Unique `id` for each section for smooth scrolling  
-- Proper heading hierarchy (`h1 → h2 → h3`)  
-- Accessible navigation structure  
-- Form fields using `required` attributes  
-- Descriptive `alt` attributes for all images  
+Each section has a unique `id` for navigation and interaction.
 
 ---
 
-# 5️⃣ CSS Architecture
+### CSS Architecture
 
-## Design System
-
-CSS uses custom properties (variables) defined in `:root` for:
-
-- Background colors  
-- Card backgrounds  
-- Text colors  
-- Accent colors  
-- Transition timing  
-- Border radius  
-
-Example:
-
-```css
-:root {
-  --bg: #061e29;
-  --bg-card: #0a2a38;
-  --primary: #5f9598;
-  --foreground: #f3f4f4;
-}
-```
-
-This enables centralized styling and easy theme customization.
+- Uses CSS variables for consistent design  
+- Supports dark/light themes via `data-theme`  
+- Responsive layout using Flexbox and Grid  
+- Organized into logical sections  
 
 ---
 
-## Dark / Light Theme System
+### JavaScript Features
 
-Theme switching is implemented using:
+#### Theme System
+- Toggle dark/light mode  
+- Stored in `localStorage`  
 
-```css
-html[data-theme="dark"] { ... }
-html[data-theme="light"] { ... }
-```
+#### Navigation System
+- Hamburger menu  
+- Active link highlighting  
+- Smooth scrolling  
 
-JavaScript dynamically updates the `data-theme` attribute on `<html>`.
+#### Scroll Animations
+- Implemented using `IntersectionObserver`  
 
-Theme preference is stored in `localStorage` under the key `"theme"`.
+#### Typing Game
+- Timer-based  
+- WPM calculation  
+- Real-time feedback  
 
----
+#### Toast Notifications
+- Displays success/error messages  
 
-## Layout Strategy
+#### Dynamic Greeting
+- Changes based on time  
 
-### Flexbox
-- Navbar alignment  
-- Button groups  
-- Contact layout  
-
-### CSS Grid
-- Projects grid layout  
-- Skills grid layout  
-
-### Responsive Breakpoints
-
-| Screen Size | Layout Behavior |
-|-------------|-----------------|
-| < 768px | Single column, hamburger menu |
-| 768px–1024px | Two-column layout |
-| > 1024px | Multi-column layout |
-
-Mobile-first adjustments improve usability on smaller screens.
+#### Hero Animations
+- Particles and effects  
 
 ---
 
-# 6️⃣ JavaScript Implementation
+## 5️⃣ AI Assistant System
 
-All interactivity is implemented in `js/script.js`.
+### Frontend (chat.js)
 
----
+- Handles user input  
+- Displays messages  
+- Formats responses  
+- Handles actions (`[SCROLL]`, `[ACTION]`)  
+- Sends requests to backend  
 
-## Theme Management
+### Backend (server.js)
 
-Functions used:
+- Processes messages  
+- Validates input  
+- Sends requests to Mistral API  
+- Returns responses  
 
-- `initTheme()`  
-- `toggleTheme()`  
+### Message Flow
 
-### Behavior
-
-1. Load saved theme from `localStorage`  
-2. If none exists, use system preference  
-3. Apply theme via `data-theme` attribute  
-4. Persist user selection  
-
----
-
-## Navigation System
-
-Features:
-
-- Hamburger menu toggle  
-- Auto-close menu when a link is clicked  
-- Active link highlighting based on scroll position  
-- Smooth scrolling using `scrollIntoView()`  
+1. User sends message  
+2. Frontend → Backend  
+3. Backend → Mistral API  
+4. Response → Frontend  
+5. UI updates  
 
 ---
 
-## Time-Based Greeting
+## 6️⃣ Data Handling
 
-A greeting message changes depending on the current time:
-
-- Morning  
-- Afternoon  
-- Evening  
-
-Enhances personalization and engagement.
+- **LocalStorage** → theme persistence  
+- **Chat history** → temporary in-memory storage  
+- **Form validation** → client-side  
 
 ---
 
-## Animated Counters
+## 7️⃣ Error Handling & User Feedback
 
-Hero statistics animate from `0` to their target values.
-
-Implementation:
-
-- Uses `IntersectionObserver`  
-- Runs only when section enters viewport  
-- Prevents repeated animation  
+- Loading indicators during AI requests  
+- API error handling  
+- Form validation feedback  
+- Disabled input during processing  
 
 ---
 
-## Scroll Reveal Animations
+## 8️⃣ Performance Considerations
 
-Elements with the `.reveal` class become visible when entering the viewport.
-
-Implemented using:
-
-```javascript
-new IntersectionObserver(...)
-```
-
-This approach is more efficient than continuous scroll event listeners.
+- No heavy frameworks  
+- Efficient DOM updates  
+- Lightweight structure  
+- Optimized animations using `IntersectionObserver`  
 
 ---
 
-## Skill Bar Animation
+## 9️⃣ Responsiveness
 
-Skill bars animate to a defined width when visible.
-
-Each bar uses a `data-width` attribute to define its final percentage.
-
----
-
-## Typing Challenge Mini-Game
-
-Features:
-
-- 30-second countdown timer  
-- Real-time scoring  
-- Words Per Minute (WPM) calculation  
-- Paste prevention  
-- Restart functionality  
-
-This feature demonstrates advanced DOM state management and event handling.
-
----
-
-## Contact Form Validation
-
-Validation process:
-
-1. Prevent default form submission  
-2. Trim input values  
-3. Validate required fields  
-4. Validate email format using regex  
-5. Display toast notification  
-6. Reset form if successful  
-
-Email validation regex:
-
-```javascript
-/^[^\s@]+@[^\s@]+\.[^\s@]+$/
-```
-
----
-
-## Back-to-Top Button
-
-- Appears after scrolling down  
-- Smoothly scrolls to the top  
-- Improves navigation on long pages  
-
----
-
-# 7️⃣ Responsiveness
-
-The website is tested for:
-
-- Desktop  
-- Tablet  
-- Mobile  
-
-Responsive techniques used:
-
+- Mobile-first design  
 - Media queries  
 - Flexible layouts  
-- Adaptive spacing  
-- Mobile navigation toggle  
 
 ---
 
-# 8️⃣ Accessibility Features
+## 🔟 Deployment
 
-- Semantic HTML structure  
-- Logical heading hierarchy  
-- Keyboard-accessible navigation  
-- Visible focus states  
-- Descriptive alt text  
-- Adequate color contrast in both themes  
+### Frontend
+- Hosted on Netlify  
 
----
+### Backend
+- Hosted on Render  
 
-# 9️⃣ Performance Considerations
+### Architecture
 
-Optimizations include:
-
-- No heavy external libraries  
-- Efficient use of `IntersectionObserver`  
-- Minimal DOM manipulation  
-- Single CSS and JS file  
-- Persistent state via `localStorage`  
-
-Result:
-
-- Fast loading time  
-- Lightweight static site  
-- Reduced script overhead  
+```
+User → Netlify → Render → Mistral API
+```
 
 ---
 
-# 🔟 Browser Compatibility
+## 1️⃣1️⃣ Security Considerations
 
-Tested on modern browsers:
-
-- Chrome  
-- Firefox  
-- Edge  
-- Safari (latest versions)  
-
-Modern features used:
-
-- CSS Variables  
-- Flexbox & Grid  
-- LocalStorage  
-- IntersectionObserver  
-
-All are supported in current browsers.
+- API key stored in environment variables  
+- `.env` excluded from GitHub  
+- No sensitive data exposed in frontend  
 
 ---
 
-# 1️⃣1️⃣ Deployment
+## Conclusion
 
-This project is a static website and requires:
+This Assignment 2 project builds on Assignment 1 by introducing interactivity, backend integration, and AI-powered features.
 
-- No backend  
-- No build tools  
-- No server configuration  
-
-Compatible with:
-
-- Netlify  
-- GitHub Pages  
-- Vercel  
-- Any static hosting provider  
-
----
-
-# Conclusion
-
-This portfolio website demonstrates modern front-end development practices using structured HTML, scalable CSS architecture, and modular JavaScript logic.
-
-The implementation satisfies assignment requirements while incorporating additional interactive enhancements to improve user experience and demonstrate technical understanding.
+The implementation demonstrates clean architecture, modular JavaScript design, effective frontend-backend communication, and responsible AI usage while maintaining performance and usability standards.

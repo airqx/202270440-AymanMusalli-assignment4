@@ -1,188 +1,234 @@
-# AI Usage Report – Assignment 1
+# AI Usage Report – Assignment 2
 
 ## Executive Summary
 
-This portfolio website was developed with the assistance of AI and design-support tools to enhance productivity, improve UI/UX decisions, and strengthen documentation quality. AI was used as a development assistant — not as a replacement for understanding or writing the code independently.
+This Assignment 2 portfolio website was developed with the support of AI tools to improve interactivity, debug implementation issues, refine code quality, and strengthen documentation. AI was used as a development assistant to support learning and problem-solving, not as a replacement for understanding the code.
 
-All AI-generated suggestions were reviewed, tested, modified, and customized to meet the assignment requirements and ensure academic integrity.
-
----
-
-# 1️⃣ Tools Used & Use Cases
-
-## Tool 1: ChatGPT (Problem-Solving & Explanations)
-
-### How It Was Used
-
-ChatGPT was used primarily for:
-
-- Debugging JavaScript logic (event listeners, DOM manipulation, scroll behavior)
-- Understanding and implementing `IntersectionObserver`
-- Improving the theme toggle logic using `localStorage`
-- Refining contact form validation logic
-- Structuring project documentation (README and technical documentation)
-- Improving UI/UX structure suggestions
-
-### Specific Use Cases in This Project
-
-- Helped fix theme persistence logic and ensure dark/light mode remains after refresh.
-- Explained how to properly structure scroll-based animations.
-- Assisted in organizing JavaScript into logical feature blocks.
-- Helped refine the contact form toast notification system.
-- Improved the clarity and formatting of Markdown documentation files.
-
-ChatGPT provided explanations and suggestions, but all code was manually reviewed and adjusted to match my HTML structure and class naming.
+All AI-generated suggestions were reviewed, tested, modified, and adapted to fit the project structure, assignment requirements, and my own implementation choices.
 
 ---
 
-## Tool 2: v0 (UI Layout Inspiration Tool)
+## 1. Tools Used & Use Cases
 
-### How It Was Used
+### Tool 1: ChatGPT
 
-v0 was used for:
+#### How It Was Used
 
-- Generating visual layout inspiration
-- Exploring modern portfolio UI structures
-- Understanding spacing and component alignment patterns
+ChatGPT was used mainly for:
 
-### Specific Use Cases in This Project
+- Debugging JavaScript behavior and fixing logic issues
+- Improving code structure and organization
+- Reviewing HTML, CSS, and JavaScript quality
+- Helping with deployment setup and backend/frontend connection
+- Supporting documentation writing and refinement
 
-- Used as a reference for structuring the hero section layout.
-- Inspired card-based project layout styling.
-- Helped visualize responsive section spacing before manual implementation.
+#### Specific Use Cases in This Project
 
-No generated code from v0 was copied directly. The final layout was manually implemented using HTML and CSS.
+- Helped refine the structure of `index.html`, `styles.css`, `script.js`, and `chat.js`
+- Assisted in improving the theme toggle logic and UI interaction behavior
+- Helped clean unused code and improve code readability for submission quality
+- Provided guidance for deploying the frontend on Netlify and connecting the backend separately
+- Assisted in improving the AI assistant feature and organizing the chat-related JavaScript
+- Supported writing and improving technical and AI usage documentation
 
----
-
-## Tool 3: Color Hunt (Design Support Tool)
-
-### How It Was Used
-
-Color Hunt was used for:
-
-- Selecting a harmonious and balanced color palette.
-- Ensuring visual consistency between sections.
-- Supporting dark/light theme styling decisions.
-
-The selected palette was manually implemented using CSS variables to maintain consistency and scalability.
+ChatGPT suggestions were not copied blindly. I reviewed each suggestion, tested it in the browser, and adjusted it to match my own file structure, class names, and design decisions.
 
 ---
 
-# 2️⃣ Benefits & Challenges
+### Tool 2: Claude
 
-## ✅ Benefits
+#### How It Was Used
 
-### 1. Increased Productivity
-- Reduced time debugging JavaScript issues.
-- Faster layout refinement and UI adjustments.
-- Quicker documentation structuring.
+Claude was used as an additional support tool for:
 
-### 2. Improved Code Quality
-- Suggested better event handling structure.
-- Encouraged modular feature organization.
-- Reinforced best practices in responsive design.
+- Reviewing code structure
+- Suggesting improvements in readability and maintainability
+- Helping think through implementation details and cleanup decisions
 
-### 3. Enhanced Learning
-- Helped understand advanced concepts like:
-  - `IntersectionObserver`
-  - `localStorage`
-  - Scroll-based UI state tracking
-- Improved problem-solving approach.
+#### Specific Use Cases in This Project
 
-### 4. Better UI/UX Decisions
-- Improved section spacing consistency.
-- Refined animation timing and behavior.
-- Suggested small usability improvements.
+- Used to compare approaches for organizing parts of the project
+- Helped identify possible improvements in code clarity
+- Supported some general refinement ideas for structure and presentation
+
+Its suggestions were treated as references only, then manually checked and adapted before use.
 
 ---
 
-## ⚠️ Challenges & Limitations
+### Tool 3: GitHub Copilot
 
-### 1. Adaptation Required
-AI suggestions were sometimes generic and needed customization to match:
-- My HTML class names
-- My folder structure
-- Assignment constraints
+#### How It Was Used
 
-### 2. Verification Needed
-All code required:
-- Manual browser testing
-- Debugging edge cases
-- Adjusting breakpoints
+GitHub Copilot was used in a limited way during development for:
 
-### 3. Not Always Perfect
-- Some suggested JavaScript logic required correction.
-- CSS refinements were needed for proper responsiveness.
-- AI-generated suggestions sometimes added unnecessary complexity.
+- Small code suggestions
+- Faster writing of repeated patterns
+- Helping while working on server-related setup
 
-AI assistance required critical evaluation before implementation.
+#### Specific Use Cases in This Project
+
+- Assisted with small autocomplete suggestions while editing JavaScript and backend code
+- Helped speed up repetitive coding tasks
+- Provided support while working with the backend/server setup
+
+Copilot was used only as a helper during coding. All important logic was still reviewed, tested, and modified manually.
 
 ---
 
-# 3️⃣ Learning Outcomes
+## 2. Benefits & Challenges
 
-Using AI tools in this assignment improved my understanding of:
+### Benefits
 
-## Technical Skills
+#### 1. Faster Problem Solving
+AI reduced the time needed to debug issues and understand why certain features were not working correctly.
 
-- DOM manipulation and event handling
-- Persistent state management with `localStorage`
-- Scroll animations using `IntersectionObserver`
-- Responsive design with Flexbox and media queries
-- UI feedback systems (toast notifications)
-- Writing structured technical documentation
+#### 2. Improved Code Quality
+AI suggestions helped improve:
+- file organization
+- naming clarity
+- removal of unused code
+- overall readability
 
-## Workflow Improvements
+#### 3. Better Understanding
+Using AI helped me better understand:
+- DOM interaction
+- event handling
+- UI state changes
+- frontend/backend connection
+- deployment workflow
 
-- Breaking features into smaller logical parts
-- Testing features incrementally
-- Reviewing AI suggestions critically before implementation
-- Iterative improvement through refinement
+#### 4. Stronger Documentation
+AI helped structure reports and documentation more clearly and professionally.
 
-## Professional Awareness
-
-- AI is most effective when used as an assistant, not as a replacement.
-- Understanding code is essential before integrating it.
-- Documentation is an important part of software development.
+#### 5. More Polished User Experience
+AI-supported refinement improved interactive elements such as:
+- theme toggling
+- animations and reveal effects
+- typing game behavior
+- AI assistant interaction
+- feedback messages
 
 ---
 
-# 4️⃣ Responsible Use & Modifications
+### Challenges & Limitations
 
-## Review Process
+#### 1. Suggestions Needed Customization
+Some AI suggestions were too generic and had to be changed to match:
+- my existing HTML structure
+- current class names
+- assignment constraints
+- my final design choices
+
+#### 2. Verification Was Necessary
+Not every AI suggestion was correct immediately. I still had to:
+- test in the browser
+- fix logic problems
+- remove unnecessary complexity
+- verify that features actually worked together
+
+#### 3. Some Suggestions Added Extra Code
+In some cases, AI-generated ideas introduced logic or code that was not needed in the final version. This required cleanup and simplification.
+
+#### 4. Deployment Guidance Still Needed Care
+Even when AI explained deployment steps, I still had to understand the difference between frontend hosting and backend hosting and configure them correctly.
+
+---
+
+## 3. Learning Outcomes
+
+Using AI tools in Assignment 2 helped me improve both technical understanding and development workflow.
+
+### Technical Learning
+
+I improved my understanding of:
+
+- JavaScript event handling
+- DOM updates and interactive UI behavior
+- code cleanup and removing unused logic
+- organizing JavaScript into focused responsibilities
+- connecting a frontend chat interface to a backend API
+- deployment basics using Netlify and Render
+- handling user feedback and error cases more clearly
+
+### Workflow Learning
+
+I also learned to:
+
+- break problems into smaller parts
+- review AI output critically instead of accepting it directly
+- compare suggestions and choose the simpler solution
+- improve code quality through iterative cleanup
+- test each feature after making changes
+
+### Professional Learning
+
+This assignment showed me that AI is most useful when it is used as:
+
+- a debugging assistant
+- a reviewer
+- a documentation helper
+- a support tool for learning
+
+It also showed me that understanding, testing, and modifying the code myself is still necessary.
+
+---
+
+## 4. Responsible Use & Modifications
+
+### Review Process
 
 All AI-generated suggestions were:
 
-- Reviewed line-by-line
-- Tested in the browser
-- Modified to match assignment requirements
-- Simplified when necessary
+- reviewed manually
+- tested in the browser or development environment
+- adjusted to match my project structure
+- simplified when needed
+- cleaned up before submission
 
-## Modifications Made
+### Modifications Made
 
-- Adjusted JavaScript to fit existing HTML structure.
-- Rewrote sections of suggested logic for clarity.
-- Customized styling to match selected color palette.
-- Refined animation timing and behavior.
-- Simplified complex suggestions to maintain readability.
+Examples of modifications include:
 
-## Academic Integrity Measures
+- changing AI-generated suggestions to match my actual HTML and CSS structure
+- simplifying JavaScript logic so it remained readable and maintainable
+- removing old or unused AI assistant logic after restructuring the chat feature
+- cleaning CSS and JavaScript to improve code quality
+- refining documentation so it accurately reflected what I actually used
 
-- No raw AI output was submitted without modification.
-- All features were fully understood before implementation.
-- The final structure, naming conventions, and logic reflect my own decisions.
-- AI usage is fully documented in this report.
+### Academic Integrity
 
----
+To maintain academic integrity:
 
-# Conclusion
-
-AI and design-support tools were used responsibly to enhance productivity, improve UI consistency, and assist with documentation. All final implementations were reviewed, customized, and tested to ensure correctness, originality, and alignment with assignment requirements.
-
-AI acted as a learning accelerator and development assistant while maintaining full academic integrity.
+- I did not submit raw AI output without review
+- I made changes to AI-generated suggestions before using them
+- I ensured I understood the final implementation
+- I used AI to support learning and development, not to replace my own work
+- I documented the tools used and how they contributed to the assignment
 
 ---
 
-**Tools Used:** ChatGPT, v0, Color Hunt  
-**Project:** Personal Portfolio – Assignment 1  
+## 5. Innovation and Effective AI Use
+
+AI was used meaningfully in this assignment, not just for generating code. It supported multiple stages of the project, including:
+
+- implementation improvement
+- debugging
+- refactoring
+- deployment guidance
+- code quality review
+- documentation support
+
+This made AI use more effective because it was integrated into the workflow as a problem-solving and learning tool rather than just a code generator.
+
+---
+
+## Conclusion
+
+AI tools were used responsibly in Assignment 2 to improve interactivity, code quality, debugging, deployment understanding, and documentation. All outputs were reviewed, tested, and adapted before being included in the final project.
+
+AI supported the development process by improving efficiency and understanding, while the final implementation decisions, testing, cleanup, and integration remained my responsibility.
+
+---
+
+**Tools Used:** ChatGPT, Claude, GitHub Copilot  
+**Project:** Personal Portfolio – Assignment 2
