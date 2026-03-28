@@ -15,9 +15,6 @@ const port = process.env.PORT || 3002;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the parent directory
-app.use(express.static(path.join(__dirname, '..')));
-
 const PORTFOLIO_CONTEXT = `
 You are Ayman Musalli's AI assistant on his personal portfolio website.
 You help visitors learn about Ayman.
@@ -87,66 +84,60 @@ app.post("/api/chat", async (req, res) => {
   try {
     const { message, history = [] } = req.body;
 
-    if (!message) {
+    if (!message || typeof message !== "string") {
       return res.status(400).json({ error: "Message is required" });
     }
 
     const trimmedHistory = Array.isArray(history)
-      ? history.slice(-8).filter(
-          (item) =>
-            item &&
-            typeof item.role === "string" &&
-            typeof item.content === "string"
-        )
+      ? history
+          .slice(-8)
+          .filter(
+            (item) =>
+              item &&
+              typeof item.role === "string" &&
+              typeof item.content === "string"
+          )
       : [];
 
-    // Build messages for Mistral
     const messages = [
-      {
-        role: "system",
-        content: PORTFOLIO_CONTEXT,
-      },
+      { role: "system", content: PORTFOLIO_CONTEXT },
       ...trimmedHistory.map((item) => ({
         role: item.role,
         content: item.content,
       })),
-      {
-        role: "user",
-        content: message,
-      },
+      { role: "user", content: message },
     ];
 
     const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.MISTRAL_API_KEY}`,
+        Authorization: `Bearer ${process.env.MISTRAL_API_KEY}`,
       },
       body: JSON.stringify({
         model: "mistral-tiny",
-        messages: messages,
+        messages,
         max_tokens: 250,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Mistral API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Mistral API error: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
-    const reply = data.choices[0].message.content || "Sorry, I could not generate a response.";
+    const reply =
+      data?.choices?.[0]?.message?.content ||
+      "Sorry, I could not generate a response.";
 
     res.json({ reply });
   } catch (error) {
-    console.error("Chat API error:", {
-      message: error.message,
-      status: error.status,
-      type: error.type,
-      fullError: error
-    });
+    console.error("Chat API error:", error.message);
     res.status(500).json({
       error: "Failed to process request.",
-      details: error.message
+      details: error.message,
     });
   }
 });
