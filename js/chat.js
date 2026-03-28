@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3002/api/chat";
+const API_URL = "https://two02270440-aymanmusalli-assignment02.onrender.com/api/chat";
 
 const messagesContainer = document.getElementById("aiChatMessages");
 const input = document.getElementById("aiInput");
