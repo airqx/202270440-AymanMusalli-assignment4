@@ -204,11 +204,7 @@ Full explanation available in: docs/ai-usage-report.md
 
 ---
 
-## 📜 License
 
-This project was created for academic purposes as part of Assignment 2.
-
----
 
 ## 👤 Author
 
