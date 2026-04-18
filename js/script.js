@@ -5,6 +5,11 @@
 
 "use strict";
 
+const BASE_API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3002"
+    : "https://two02270440-aymanmusalli-assignment02-2.onrender.com";
+
 /*
 |--------------------------------------------------------------------------
 | THEME MANAGEMENT
@@ -467,7 +472,7 @@ function initContactForm() {
     submitButton.textContent = "Sending...";
 
     try {
-      const response = await fetch("http://localhost:3002/api/contact", {
+      const response = await fetch(`${BASE_API_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
