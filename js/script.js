@@ -415,9 +415,8 @@ function showToast(message, type = "success") {
 |--------------------------------------------------------------------------
 | CONTACT FORM
 |--------------------------------------------------------------------------
-| Currently front-end only.
-| Prevents page refresh, validates native form fields, shows a toast, and
-| resets the form. This can later be replaced with real API submission.
+| Handles form validation, submission to backend, and user feedback.
+| Sends form data to backend email endpoint for processing.
 */
 function initContactForm() {
   const form = document.getElementById("contactForm");
@@ -425,22 +424,82 @@ function initContactForm() {
 
   if (!form || !submitButton) return;
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    // Browser validation
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    submitButton.disabled = true;
-    showToast("Message sent successfully!", "success");
-    form.reset();
+    // Get form data
+    const formData = new FormData(form);
+    const name = formData.get("name").trim();
+    const email = formData.get("email").trim();
+    const subject = formData.get("subject").trim();
+    const message = formData.get("message").trim();
 
-    setTimeout(() => {
+    // Custom validation
+    if (!name || name.length < 2) {
+      showToast("Please enter a valid name", "error");
+      return;
+    }
+
+    if (!email || !isValidEmail(email)) {
+      showToast("Please enter a valid email address", "error");
+      return;
+    }
+
+    if (!subject || subject.length < 3) {
+      showToast("Subject must be at least 3 characters", "error");
+      return;
+    }
+
+    if (!message || message.length < 10) {
+      showToast("Message must be at least 10 characters", "error");
+      return;
+    }
+
+    // Disable button and show loading state
+    submitButton.disabled = true;
+    const originalText = submitButton.textContent;
+    submitButton.textContent = "Sending...";
+
+    try {
+      const response = await fetch("http://localhost:3002/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      showToast(data.message || "Message sent successfully!", "success");
+      form.reset();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      showToast(
+        error.message || "Failed to send message. Please try again.",
+        "error"
+      );
+    } finally {
       submitButton.disabled = false;
-    }, 1000);
+      submitButton.textContent = originalText;
+    }
   });
+}
+
+// Email validation helper
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
 /*
