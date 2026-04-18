@@ -44,7 +44,7 @@
           <ul class="nav-menu" id="navMenu">
             <li><a href="#home" class="nav-link active">Home</a></li>
             <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#github" class="nav-link">Projects</a></li>
             <li><a href="#skills" class="nav-link">Skills</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
           </ul>
@@ -104,7 +104,7 @@
           <!-- Greeting/message inserted by JavaScript -->
           <p class="hero-description fade-up delay-3" id="greeting"></p>
           <div class="hero-buttons fade-up delay-4">
-            <a href="#projects" class="btn btn-primary">
+            <a href="#github" class="btn btn-primary">
               View My Work
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12" />
@@ -228,156 +228,44 @@
       </section>
 
       <!-- =========================
-           Projects Section
-           Each card contains image, links, tech tags, and short summary
+           GitHub Repositories Section
+           Fetches and displays live repositories from GitHub API
            ========================= -->
-      <section id="projects" class="projects">
+      <section id="github" class="github-repos">
         <div class="container">
           <div class="section-header reveal">
-            <span class="section-tag">Projects</span>
-            <h2 class="section-title">Things I've <span class="text-gradient">built</span></h2>
+            <span class="section-tag">Live Data</span>
+            <h2 class="section-title">
+              My <span class="text-gradient">GitHub Repositories</span>
+            </h2>
             <p class="section-description">
-              A selection of projects that showcase my skills and passion for development.
+              Latest repositories fetched live from GitHub. Updated in real-time.
             </p>
           </div>
 
-          <div class="projects-grid">
-            <!-- Project card pattern:
-                 1) preview image
-                 2) overlay actions
-                 3) tags + description -->
-            <article class="project-card reveal">
-              <div class="project-image-wrapper">
-                <img
-                  src="assets/images/project1.jpg"
-                  alt="Printing Management System screenshot"
-                  class="project-image"
-                />
-                <div class="project-overlay">
-                  <a
-                    href="https://github.com/airqx/Printing-Management-System.git"
-                    class="project-overlay-btn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open Printing Management System project"
-                  >
-                    View Project
-                  </a>
-                  <a
-                    href="https://github.com/airqx/Printing-Management-System.git"
-                    class="project-overlay-btn outline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open source code for Printing Management System"
-                  >
-                    Source Code
-                  </a>
-                </div>
-              </div>
+          <!-- Loading state -->
+          <div id="reposLoading" class="repos-loading reveal">
+            <div class="loading-spinner"></div>
+            <p>Loading repositories...</p>
+          </div>
 
-              <div class="project-content">
-                <div class="project-tags">
-                  <span class="tag">PostgreSQL</span>
-                  <span class="tag">TypeScript</span>
-                  <span class="tag">Next.js</span>
-                </div>
-                <h3>Printing Management System</h3>
-                <p>
-                  A web-based platform designed to control, monitor, and secure
-                  institutional printing.
-                </p>
-              </div>
-            </article>
+          <!-- Error state -->
+          <div id="reposError" class="repos-error reveal hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p id="reposErrorMessage">Unable to load repositories. Please try again later.</p>
+          </div>
 
-            <article class="project-card reveal">
-              <div class="project-image-wrapper">
-                <img
-                  src="assets/images/project2.jpg"
-                  alt="Portfolio website screenshot"
-                  class="project-image"
-                />
-                <div class="project-overlay">
-                  <a
-                    href="https://portfolio-landing-page1.vercel.app/"
-                    class="project-overlay-btn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open live demo of Portfolio Website"
-                  >
-                    View Live
-                  </a>
-                  <a
-                    href="https://github.com/airqx/portfolio-landing-page.git"
-                    class="project-overlay-btn outline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open source code for Portfolio Website"
-                  >
-                    Source Code
-                  </a>
-                </div>
-              </div>
-
-              <div class="project-content">
-                <div class="project-tags">
-                  <span class="tag">UI/UX</span>
-                  <span class="tag">Figma</span>
-                  <span class="tag">HTML</span>
-                  <span class="tag">JS</span>
-                  <span class="tag">CSS</span>
-                </div>
-                <h3>Portfolio Website</h3>
-                <p>
-                  A modern portfolio with smooth animations, parallax scrolling,
-                  and page flip effects.
-                </p>
-              </div>
-            </article>
-
-            <article class="project-card reveal">
-              <div class="project-image-wrapper">
-                <img
-                  src="assets/images/project3.jpg"
-                  alt="Bzip2 fuzz testing screenshot"
-                  class="project-image"
-                />
-                <div class="project-overlay">
-                  <a
-                    href="https://github.com/airqx/Bzip2-Fuzz-Testing.git"
-                    class="project-overlay-btn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open Bzip2 Fuzz Testing project"
-                  >
-                    View Project
-                  </a>
-                  <a
-                    href="https://github.com/airqx/Bzip2-Fuzz-Testing.git"
-                    class="project-overlay-btn outline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open source code for Bzip2 Fuzz Testing"
-                  >
-                    Source Code
-                  </a>
-                </div>
-              </div>
-
-              <div class="project-content">
-                <div class="project-tags">
-                  <span class="tag">C</span>
-                  <span class="tag">AFL++</span>
-                  <span class="tag">CFGs</span>
-                </div>
-                <h3>Bzip2 Fuzz Testing</h3>
-                <p>
-                  Greybox fuzzing and coverage analysis of the bzip2 compression utility.
-                </p>
-              </div>
-            </article>
+          <!-- Repositories grid -->
+          <div id="reposContainer" class="repos-grid">
+            <!-- GitHub repo cards are injected here by JavaScript -->
           </div>
         </div>
       </section>
+
   <!-- Skills Section -->
  <section id="skills" class="skills">
   <div class="marquee-section">

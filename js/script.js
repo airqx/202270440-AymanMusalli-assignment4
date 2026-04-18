@@ -817,6 +817,114 @@ function toggleChatPanel() {
 
 /*
 |--------------------------------------------------------------------------
+| GITHUB REPOSITORIES API
+|--------------------------------------------------------------------------
+| Fetches repositories from GitHub API and displays them dynamically.
+| Includes error handling and loading states.
+*/
+async function initGitHubRepos() {
+  const container = document.getElementById("reposContainer");
+  const loading = document.getElementById("reposLoading");
+  const error = document.getElementById("reposError");
+
+  if (!container || !loading || !error) return;
+
+  try {
+    // Show loading state
+    loading.classList.remove("hidden");
+    error.classList.add("hidden");
+    container.innerHTML = "";
+
+    // Fetch repositories from GitHub API
+    const response = await fetch("https://api.github.com/users/airqx/repos?sort=stars&per_page=9");
+
+    if (!response.ok) {
+      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+    }
+
+    const repos = await response.json();
+
+    if (!Array.isArray(repos) || repos.length === 0) {
+      throw new Error("No repositories found");
+    }
+
+    // Hide loading state
+    loading.classList.add("hidden");
+
+    // Create repository cards
+    repos.forEach((repo) => {
+      const card = createRepoCard(repo);
+      container.appendChild(card);
+    });
+
+    // Trigger reveal animation for new elements
+    const revealElements = container.querySelectorAll(".reveal");
+    revealElements.forEach((element) => {
+      element.classList.add("visible");
+    });
+  } catch (err) {
+    console.error("Error loading GitHub repositories:", err);
+
+    // Show error state
+    loading.classList.add("hidden");
+    error.classList.remove("hidden");
+    const errorMessage = document.getElementById("reposErrorMessage");
+    if (errorMessage) {
+      errorMessage.textContent = `Unable to load repositories: ${err.message}`;
+    }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| CREATE REPOSITORY CARD
+|--------------------------------------------------------------------------
+| Creates a DOM element for a single repository.
+*/
+function createRepoCard(repo) {
+  const card = document.createElement("article");
+  card.className = "repo-card reveal visible";
+
+  // Build the card HTML
+  card.innerHTML = `
+    <div class="repo-header">
+      <svg class="repo-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+      <h3 class="repo-name">
+        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${repo.name} on GitHub">
+          ${repo.name.replace(/-/g, " ")}
+        </a>
+      </h3>
+    </div>
+
+    <p class="repo-description ${!repo.description ? "empty" : ""}">
+      ${repo.description || "No description available"}
+    </p>
+
+    <div class="repo-meta">
+      ${repo.language ? `<span class="repo-language">${repo.language}</span>` : ""}
+      ${repo.stargazers_count > 0 ? `<span class="repo-meta-item" title="Stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="12 2 15.09 10.26 24 10.35 17.77 16.01 20.16 24.02 12 18.77 3.84 24.02 6.23 16.01 0 10.35 8.91 10.26 12 2"/></svg>${repo.stargazers_count}</span>` : ""}
+      ${repo.forks_count > 0 ? `<span class="repo-meta-item" title="Forks"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><line x1="12" y1="12" x2="12" y2="15"/><line x1="18" y1="9" x2="18" y2="15"/><line x1="6" y1="6" x2="12" y2="12"/><line x1="12" y1="12" x2="18" y2="6"/></svg>${repo.forks_count}</span>` : ""}
+    </div>
+
+    <div class="repo-links">
+      <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="repo-link-btn primary" aria-label="View ${repo.name} repository">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+        View Repo
+      </a>
+      ${repo.homepage && repo.homepage.trim() !== "" ? `<a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="repo-link-btn secondary" aria-label="Visit ${repo.name} live site"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Live</a>` : ""}
+    </div>
+  `;
+
+  return card;
+}
+
+/*
+|--------------------------------------------------------------------------
 | APP INITIALIZATION
 |--------------------------------------------------------------------------
 | Runs all feature initializers after DOM is fully loaded.
@@ -836,6 +944,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMarquee();
   initTypingGame();
   initAIAssistant();
+  initGitHubRepos();
 
   const themeToggle = document.getElementById("themeToggle");
   if (themeToggle) {
