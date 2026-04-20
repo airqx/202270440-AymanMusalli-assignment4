@@ -8,7 +8,7 @@
 const BASE_API_URL =
   window.location.hostname === "localhost"
     ? "http://localhost:3002"
-    : "https://two02270440-aymanmusalli-assignment02-2.onrender.com";
+    : "https://two02270440-aymanmusalli-assignment03.onrender.com";
 
 /*
 |--------------------------------------------------------------------------
