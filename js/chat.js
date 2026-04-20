@@ -135,13 +135,28 @@ async function sendMessage(customMessage = null) {
 if (chatForm) {
   chatForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    event.stopPropagation();
     sendMessage();
   });
 }
 
+// Capture-phase guard: blocks any native submit fallback before page refresh.
+document.addEventListener(
+  "submit",
+  (event) => {
+    if (event.target instanceof HTMLFormElement && event.target.id === "aiChatForm") {
+      event.preventDefault();
+      event.stopPropagation();
+      sendMessage();
+    }
+  },
+  true
+);
+
 if (sendButton) {
   sendButton.addEventListener("click", (event) => {
     event.preventDefault();
+    event.stopPropagation();
     sendMessage();
   });
 }
