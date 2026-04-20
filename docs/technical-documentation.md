@@ -110,7 +110,7 @@ Backend reads sensitive data from .env:
 ## 6. Security and Reliability Notes
 - No API keys in frontend code.
 - Input validation on both frontend and backend.
-- CORS enabled to allow frontend-backend communication.
+- CORS uses an explicit allowlist (FRONTEND_ORIGIN + localhost development origins).
 - Clear error handling for external API failures.
 
 ## 7. Deployment

@@ -116,6 +116,7 @@ GMAIL_USER=your-email@gmail.com
 GMAIL_APP_PASSWORD=your-gmail-app-password
 MISTRAL_API_KEY=your-mistral-api-key
 PORT=3002
+FRONTEND_ORIGIN=https://portifolio-ayman1069.netlify.app
 ```
 
 ### 4. Start backend server

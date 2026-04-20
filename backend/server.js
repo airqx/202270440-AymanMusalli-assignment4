@@ -13,7 +13,32 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3002;
 
-app.use(cors());
+const allowedOrigins = [
+  process.env.FRONTEND_ORIGIN,
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Allow same-origin, server-to-server, and tool-based requests with no Origin header.
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error("Not allowed by CORS"));
+    },
+  })
+);
 app.use(express.json());
 
 const PORTFOLIO_CONTEXT = `
