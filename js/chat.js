@@ -12,6 +12,7 @@ const chatForm = document.getElementById("aiChatForm");
 const suggestionsContainer = document.getElementById("aiSuggestions");
 
 let chatHistory = [];
+let isSendingMessage = false;
 
 function addMessage(text, sender = "bot") {
   if (!messagesContainer) return;
@@ -85,9 +86,12 @@ function setLoading(isLoading) {
 
 async function sendMessage(customMessage = null) {
   if (!chatInput || !messagesContainer) return;
+  if (isSendingMessage) return;
 
   const message = (customMessage ?? chatInput.value).trim();
   if (!message) return;
+
+  isSendingMessage = true;
 
   addMessage(message, "user");
   chatHistory.push({ role: "user", content: message });
@@ -124,6 +128,7 @@ async function sendMessage(customMessage = null) {
     console.error("AI chat error:", error);
     addMessage("Sorry, I couldn’t connect right now.", "bot");
   } finally {
+    isSendingMessage = false;
     setLoading(false);
 
     if (chatInput) {
