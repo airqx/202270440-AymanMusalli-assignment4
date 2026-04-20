@@ -1,9 +1,16 @@
-const BASE_API_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:3002"
-    : "https://two02270440-aymanmusalli-assignment03.onrender.com";
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", ""]);
+const isLocalEnvironment =
+  LOCAL_HOSTS.has(window.location.hostname) ||
+  window.location.protocol === "file:";
 
-const API_URL = `${BASE_API_URL}/api/chat`;
+// Optional global override for quick testing without editing source.
+const CHAT_BASE_API_URL =
+  window.__AI_API_BASE_URL ||
+  (isLocalEnvironment
+    ? "http://localhost:3002"
+    : "https://two02270440-aymanmusalli-assignment03.onrender.com");
+
+const CHAT_API_URL = `${CHAT_BASE_API_URL}/api/chat`;
 
 const messagesContainer = document.getElementById("aiChatMessages");
 const chatInput = document.getElementById("aiInput");
@@ -100,7 +107,7 @@ async function sendMessage(customMessage = null) {
   setLoading(true);
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(CHAT_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
