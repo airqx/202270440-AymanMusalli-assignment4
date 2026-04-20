@@ -99,7 +99,17 @@ npm install
 ```
 
 ### 3. Create backend environment file
-Create `backend/.env` with:
+You can copy the template file:
+
+```bash
+# macOS / Linux
+cp .env.example .env
+
+# Windows PowerShell
+Copy-Item .env.example .env
+```
+
+Then edit `.env` with your real values:
 
 ```env
 GMAIL_USER=your-email@gmail.com
