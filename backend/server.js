@@ -15,6 +15,7 @@ const port = process.env.PORT || 3002;
 
 const allowedOrigins = [
   process.env.FRONTEND_ORIGIN,
+  "https://202270440-ayman-musalli-assignment0.vercel.app",
   "https://portifolio-ayman00.netlify.app/",
   "http://localhost:3000",
   "http://127.0.0.1:3000",
