@@ -905,14 +905,17 @@ async function initGitHubRepos() {
     error.classList.add("hidden");
     container.innerHTML = "";
 
-    // Fetch repositories from GitHub API
-    const response = await fetch("https://api.github.com/users/airqx/repos?sort=stars&per_page=9");
+    // Fetch repositories from backend proxy to avoid browser-side GitHub rate limits
+    const response = await fetch(`${BASE_API_URL}/api/repos`);
+    const payload = await response.json();
 
     if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        payload.details || payload.error || `Repositories API error: ${response.status} ${response.statusText}`
+      );
     }
 
-    const repos = await response.json();
+    const repos = Array.isArray(payload.repos) ? payload.repos : [];
 
     if (!Array.isArray(repos) || repos.length === 0) {
       throw new Error("No repositories found");

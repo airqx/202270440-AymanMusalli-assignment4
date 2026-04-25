@@ -113,6 +113,7 @@ Update `backend/.env` values:
 GMAIL_USER=your-email@gmail.com
 GMAIL_APP_PASSWORD=your-gmail-app-password
 MISTRAL_API_KEY=your-mistral-api-key
+GITHUB_TOKEN=your-github-token-optional
 PORT=3002
 ```
 
@@ -128,6 +129,9 @@ Open `index.html` directly in a browser or run with a static local server.
 
 ### Health
 `GET /api/health`
+
+### Repositories
+`GET /api/repos`
 
 ### Chat
 `POST /api/chat`

@@ -7,6 +7,14 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3002;
+const GITHUB_REPOS_URL =
+  "https://api.github.com/users/airqx/repos?sort=stars&per_page=9&type=owner";
+const REPO_CACHE_TTL_MS = 10 * 60 * 1000;
+
+let repoCache = {
+  data: null,
+  expiresAt: 0,
+};
 
 const normalizeOrigin = (origin) =>
   typeof origin === "string" ? origin.replace(/\/$/, "") : origin;
@@ -104,6 +112,80 @@ PHILOSOPHY:
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, message: "Backend is running" });
+});
+
+app.get("/api/repos", async (req, res) => {
+  try {
+    const now = Date.now();
+
+    if (repoCache.data && repoCache.expiresAt > now) {
+      res.json({ repos: repoCache.data, cached: true });
+      return;
+    }
+
+    const headers = {
+      Accept: "application/vnd.github+json",
+      "User-Agent": "Ayman-Portfolio-Backend",
+    };
+
+    if (process.env.GITHUB_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
+    const response = await fetch(GITHUB_REPOS_URL, { headers });
+
+    if (!response.ok) {
+      const resetUnix = response.headers.get("x-ratelimit-reset");
+      const resetAt = resetUnix
+        ? new Date(Number(resetUnix) * 1000).toISOString()
+        : null;
+
+      throw new Error(
+        response.status === 403
+          ? `GitHub API rate limit reached${resetAt ? ` (resets at ${resetAt})` : ""}`
+          : `GitHub API error: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const repos = await response.json();
+
+    if (!Array.isArray(repos)) {
+      throw new Error("Invalid repositories payload from GitHub API");
+    }
+
+    const normalizedRepos = repos.map((repo) => ({
+      name: repo.name,
+      html_url: repo.html_url,
+      description: repo.description,
+      language: repo.language,
+      stargazers_count: repo.stargazers_count,
+      forks_count: repo.forks_count,
+      homepage: repo.homepage,
+    }));
+
+    repoCache = {
+      data: normalizedRepos,
+      expiresAt: now + REPO_CACHE_TTL_MS,
+    };
+
+    res.json({ repos: normalizedRepos, cached: false });
+  } catch (error) {
+    console.error("GitHub repos API error:", error.message);
+
+    if (repoCache.data) {
+      res.json({
+        repos: repoCache.data,
+        cached: true,
+        stale: true,
+      });
+      return;
+    }
+
+    res.status(502).json({
+      error: "Failed to load repositories.",
+      details: error.message,
+    });
+  }
 });
 
 app.post("/api/chat", async (req, res) => {
