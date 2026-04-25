@@ -2138,7 +2138,7 @@ html[data-theme="dark"] .code-display {
 @media (max-width: 480px) {
   .ai-assistant {
     right: 1rem;
-    bottom: 1rem;
+    bottom: 3.5rem;
   }
 
   .ai-chat-panel {
@@ -2153,8 +2153,8 @@ html[data-theme="dark"] .code-display {
   }
 
   .back-to-top {
-    bottom: 6.5rem;
-    right: 1rem;
+    bottom: 0.5rem;
+    right: 1.2rem;
   }
 }
 
