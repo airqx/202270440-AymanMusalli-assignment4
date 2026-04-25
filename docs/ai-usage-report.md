@@ -1,4 +1,4 @@
-# AI Usage Report - Assignment 3
+# AI Usage Report - Assignment 4
 
 ## 1. Tools Used and Use Cases
 
@@ -57,11 +57,11 @@ I used AI as an assistant, then manually:
 
 No raw AI output was submitted without review and modification.
 
-## 5. Assignment 3 Contributions Supported by AI
+## 5. Assignment 4 Contributions Supported by AI
 - GitHub API integration flow and error handling patterns.
 - Contact form validation and backend integration review.
 - UI feedback flow improvements (loading states and notifications).
-- Documentation quality improvements for project reporting.
+- Documentation quality improvements for the final project report and presentation preparation.
 
 ## Conclusion
 AI tools helped speed up development and improve quality, but final architecture, verification, and code decisions remained my responsibility. The final solution was tested and adapted to meet assignment requirements and maintain academic integrity.

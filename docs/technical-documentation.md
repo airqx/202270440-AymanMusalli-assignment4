@@ -1,7 +1,7 @@
-# Technical Documentation - Assignment 3
+# Technical Documentation - Assignment 4
 
 ## 1. Project Overview
-This project is an advanced personal portfolio implementation for Assignment 3. It integrates frontend interactivity, external APIs, backend services, and production deployment.
+This project is the final personal portfolio web application submitted for Assignment 4. It integrates frontend interactivity, external APIs, backend services, and an existing production deployment carried forward from the previous assignment.
 
 Primary goals:
 - integrate external APIs
@@ -31,13 +31,13 @@ Primary goals:
 - Gmail SMTP (contact form email delivery)
 
 ### Hosting
-- Netlify (frontend)
+- Vercel (frontend)
 - Render (backend)
 
 ## 3. Architecture and File Organization
 
 ```text
-202270440-AymanMusalli-Assignment02/
+202270440-AymanMusalli-assignment4/
 |-- index.html
 |-- css/styles.css
 |-- js/script.js
@@ -47,7 +47,8 @@ Primary goals:
 |-- backend/.env.example
 |-- assets/
 |-- docs/ai-usage-report.md
-`-- docs/technical-documentation.md
+|-- docs/technical-documentation.md
+`-- presentation/
 ```
 
 ### Responsibility Split
@@ -125,15 +126,16 @@ Required environment variables:
 
 ## 7. Deployment
 
-### Frontend Deployment (Netlify)
-- Static deployment connected to GitHub.
+### Frontend Deployment (Vercel)
+- Static deployment hosted on Vercel.
+- The live deployment link is reused from the existing Assignment 3 hosting setup because the application code remains the same.
 
 ### Backend Deployment (Render)
 - Node.js web service configured from `backend/`.
 - Environment variables configured in Render dashboard.
 
 ### Production Request Flow
-User -> Netlify frontend -> Render backend -> external APIs/services
+User -> Vercel frontend -> Render backend -> external APIs/services
 
 ## 8. Testing Approach
 - Manual UI testing for responsive layout and interaction flows.
@@ -165,4 +167,4 @@ Consistent structure, comments for non-trivial logic, and no current editor erro
 README, technical documentation, and AI usage report are provided.
 
 ## Conclusion
-The project meets Assignment 3 goals by combining external API integration, advanced frontend behavior, backend processing, deployment, and structured documentation in a cohesive portfolio application.
+The project meets Assignment 4 goals by combining a polished portfolio experience, advanced frontend behavior, backend processing, existing deployment infrastructure, and structured documentation in a cohesive final submission.

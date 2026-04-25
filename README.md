@@ -1,10 +1,13 @@
-# Personal Portfolio Website - Assignment 3
+# Personal Portfolio Website - Assignment 4
 
 ## Live Demo
 
 [https://portfolio-ayman00.vercel.app/](https://portfolio-ayman00.vercel.app/)
+
+This submission reuses the existing live deployment from the Assignment 3 project because the application codebase remains the same and Assignment 4 focuses on final polish, documentation, and presentation assets.
+
 ## Overview
-This project is an enhanced portfolio website for Assignment 3, focused on API integration, advanced frontend logic, backend communication, and production deployment.
+This project is the final personal portfolio web application for Assignment 4. It combines the features completed in earlier assignments with final documentation, deployment reuse, and presentation-ready structure.
 
 The website presents profile information, skills, repositories, and contact channels with interactive UI behavior and robust error handling.
 
@@ -64,7 +67,7 @@ The website presents profile information, skills, repositories, and contact chan
 ## Project Structure
 
 ```text
-202270440-AymanMusalli-Assignment03/
+202270440-AymanMusalli-assignment4/
 |-- index.html
 |-- css/
 |   `-- styles.css
@@ -81,6 +84,9 @@ The website presents profile information, skills, repositories, and contact chan
 |-- docs/
 |   |-- ai-usage-report.md
 |   `-- technical-documentation.md
+|-- presentation/
+|   |-- slides.pdf
+|   `-- demo-video.mp4
 `-- .gitignore
 ```
 
@@ -88,8 +94,8 @@ The website presents profile information, skills, repositories, and contact chan
 
 ### 1. Clone repository
 ```bash
-git clone https://github.com/airqx/202270440-AymanMusalli-Assignment03.git
-cd 202270440-AymanMusalli-Assignment03
+git clone https://github.com/airqx/202270440-AymanMusalli-assignment4.git
+cd 202270440-AymanMusalli-assignment4
 ```
 
 ### 2. Install backend dependencies
@@ -158,7 +164,7 @@ Open `index.html` directly in a browser or run with a static local server.
 ## AI Usage
 AI tools were used for implementation support, debugging, and documentation refinement. AI output was reviewed, tested, and modified before use.
 
-See detailed report in `docs/ai-usage-report.md`.
+See the detailed report in `docs/ai-usage-report.md`.
 
 ## Author
 Ayman Musalli
