@@ -9,12 +9,46 @@ const app = express();
 const port = process.env.PORT || 3002;
 const GITHUB_REPOS_URL =
   "https://api.github.com/users/airqx/repos?sort=stars&per_page=9&type=owner";
+const GITHUB_PROFILE_REPOS_PAGE = "https://github.com/airqx?tab=repositories";
 const REPO_CACHE_TTL_MS = 10 * 60 * 1000;
 
 let repoCache = {
   data: null,
   expiresAt: 0,
 };
+
+function parseReposFromProfileHtml(html) {
+  const repos = [];
+  const seen = new Set();
+  const repoAnchorRegex =
+    /<a[^>]*itemprop="name codeRepository"[^>]*href="\/airqx\/([^"/?#]+)"[^>]*>/g;
+
+  let match;
+  while ((match = repoAnchorRegex.exec(html)) !== null) {
+    const name = match[1];
+
+    if (!name || seen.has(name)) {
+      continue;
+    }
+
+    seen.add(name);
+    repos.push({
+      name,
+      html_url: `https://github.com/airqx/${name}`,
+      description: null,
+      language: null,
+      stargazers_count: 0,
+      forks_count: 0,
+      homepage: null,
+    });
+
+    if (repos.length >= 9) {
+      break;
+    }
+  }
+
+  return repos;
+}
 
 const normalizeOrigin = (origin) =>
   typeof origin === "string" ? origin.replace(/\/$/, "") : origin;
@@ -135,6 +169,29 @@ app.get("/api/repos", async (req, res) => {
     const response = await fetch(GITHUB_REPOS_URL, { headers });
 
     if (!response.ok) {
+      if (response.status === 403) {
+        const profileResponse = await fetch(GITHUB_PROFILE_REPOS_PAGE, { headers });
+
+        if (profileResponse.ok) {
+          const profileHtml = await profileResponse.text();
+          const fallbackRepos = parseReposFromProfileHtml(profileHtml);
+
+          if (fallbackRepos.length > 0) {
+            repoCache = {
+              data: fallbackRepos,
+              expiresAt: now + REPO_CACHE_TTL_MS,
+            };
+
+            res.json({
+              repos: fallbackRepos,
+              cached: false,
+              fallback: "profile-scrape",
+            });
+            return;
+          }
+        }
+      }
+
       const resetUnix = response.headers.get("x-ratelimit-reset");
       const resetAt = resetUnix
         ? new Date(Number(resetUnix) * 1000).toISOString()
