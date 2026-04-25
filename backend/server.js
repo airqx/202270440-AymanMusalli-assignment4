@@ -10,12 +10,25 @@ const port = process.env.PORT || 3002;
 const GITHUB_REPOS_URL =
   "https://api.github.com/users/airqx/repos?sort=stars&per_page=9&type=owner";
 const GITHUB_PROFILE_REPOS_PAGE = "https://github.com/airqx?tab=repositories";
+const GITHUB_ATOM_FEED_URL = "https://github.com/airqx.atom";
 const REPO_CACHE_TTL_MS = 10 * 60 * 1000;
 
 let repoCache = {
   data: null,
   expiresAt: 0,
 };
+
+function createFallbackRepo(name) {
+  return {
+    name,
+    html_url: `https://github.com/airqx/${name}`,
+    description: null,
+    language: null,
+    stargazers_count: 0,
+    forks_count: 0,
+    homepage: null,
+  };
+}
 
 function parseReposFromProfileHtml(html) {
   const repos = [];
@@ -32,15 +45,32 @@ function parseReposFromProfileHtml(html) {
     }
 
     seen.add(name);
-    repos.push({
-      name,
-      html_url: `https://github.com/airqx/${name}`,
-      description: null,
-      language: null,
-      stargazers_count: 0,
-      forks_count: 0,
-      homepage: null,
-    });
+    repos.push(createFallbackRepo(name));
+
+    if (repos.length >= 9) {
+      break;
+    }
+  }
+
+  return repos;
+}
+
+function parseReposFromAtomFeed(xml) {
+  const repos = [];
+  const seen = new Set();
+  const repoLinkRegex =
+    /<link[^>]*rel="alternate"[^>]*href="https:\/\/github\.com\/airqx\/([^"/?#<]+)"/g;
+
+  let match;
+  while ((match = repoLinkRegex.exec(xml)) !== null) {
+    const name = match[1];
+
+    if (!name || seen.has(name)) {
+      continue;
+    }
+
+    seen.add(name);
+    repos.push(createFallbackRepo(name));
 
     if (repos.length >= 9) {
       break;
@@ -186,6 +216,32 @@ app.get("/api/repos", async (req, res) => {
               repos: fallbackRepos,
               cached: false,
               fallback: "profile-scrape",
+            });
+            return;
+          }
+        }
+
+        const atomResponse = await fetch(GITHUB_ATOM_FEED_URL, {
+          headers: {
+            Accept: "application/atom+xml",
+            "User-Agent": "Ayman-Portfolio-Backend",
+          },
+        });
+
+        if (atomResponse.ok) {
+          const atomXml = await atomResponse.text();
+          const atomRepos = parseReposFromAtomFeed(atomXml);
+
+          if (atomRepos.length > 0) {
+            repoCache = {
+              data: atomRepos,
+              expiresAt: now + REPO_CACHE_TTL_MS,
+            };
+
+            res.json({
+              repos: atomRepos,
+              cached: false,
+              fallback: "atom-feed",
             });
             return;
           }
