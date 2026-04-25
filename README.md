@@ -1,8 +1,8 @@
 # Personal Portfolio Website - Assignment 3
 
 ## Live Demo
-[https://portifolio-ayman1069.netlify.app/
-](https://portfolio-ayman00.vercel.app/)
+
+[](https://portfolio-ayman00.vercel.app/)
 ## Overview
 This project is an enhanced portfolio website for Assignment 3, focused on API integration, advanced frontend logic, backend communication, and production deployment.
 
