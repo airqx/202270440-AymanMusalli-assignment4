@@ -58,13 +58,13 @@ The website presents profile information, skills, repositories, and contact chan
 - Gmail SMTP
 
 ### Deployment
-- Frontend: Netlify
+- Frontend: Vercel
 - Backend: Render
 
 ## Project Structure
 
 ```text
-202270440-AymanMusalli-Assignment02/
+202270440-AymanMusalli-Assignment03/
 |-- index.html
 |-- css/
 |   `-- styles.css
@@ -89,7 +89,7 @@ The website presents profile information, skills, repositories, and contact chan
 ### 1. Clone repository
 ```bash
 git clone https://github.com/airqx/202270440-AymanMusalli-Assignment03.git
-cd 202270440-AymanMusalli-Assignment02
+cd 202270440-AymanMusalli-Assignment03
 ```
 
 ### 2. Install backend dependencies
@@ -114,7 +114,6 @@ GMAIL_USER=your-email@gmail.com
 GMAIL_APP_PASSWORD=your-gmail-app-password
 MISTRAL_API_KEY=your-mistral-api-key
 PORT=3002
-FRONTEND_ORIGIN=https://portifolio-ayman1069.netlify.app
 ```
 
 ### 4. Start backend

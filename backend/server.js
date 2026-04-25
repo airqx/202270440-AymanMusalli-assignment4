@@ -1,14 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
 import nodemailer from "nodemailer";
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -56,7 +51,7 @@ IMPORTANT RULES:
 - Be conversational and natural
 - Use proper formatting with line breaks for readability
 - When asked to show or navigate to a section, include the action marker:
-  [SCROLL:projects]
+  [SCROLL:github]
   [SCROLL:skills]
   [SCROLL:contact]
   [SCROLL:about]
