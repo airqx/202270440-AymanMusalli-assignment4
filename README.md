@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-[](https://portfolio-ayman00.vercel.app/)
+[https://portfolio-ayman00.vercel.app/](https://portfolio-ayman00.vercel.app/)
 ## Overview
 This project is an enhanced portfolio website for Assignment 3, focused on API integration, advanced frontend logic, backend communication, and production deployment.
 
