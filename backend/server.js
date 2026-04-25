@@ -13,25 +13,29 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3002;
 
-const allowedOrigins = [
-  process.env.FRONTEND_ORIGIN,
-  "https://portfolio-ayman00.vercel.app/",
+const normalizeOrigin = (origin) =>
+  typeof origin === "string" ? origin.replace(/\/$/, "") : origin;
+
+const allowedOrigins = new Set([
+  normalizeOrigin(process.env.FRONTEND_ORIGIN),
+  "https://portfolio-ayman00.vercel.app",
   "http://localhost:3000",
   "http://127.0.0.1:3000",
   "http://localhost:5500",
   "http://127.0.0.1:5500",
-].filter(Boolean);
+]);
 
 app.use(
   cors({
     origin(origin, callback) {
       // Allow same-origin, server-to-server, and tool-based requests with no Origin header.
-      if (!origin) {
+      // Also allow the string "null" sent by browsers for file:// pages (local dev only).
+      if (!origin || origin === "null") {
         callback(null, true);
         return;
       }
 
-      if (allowedOrigins.includes(origin)) {
+      if (allowedOrigins.has(normalizeOrigin(origin))) {
         callback(null, true);
         return;
       }

@@ -5,10 +5,16 @@
 
 "use strict";
 
+const _LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", ""]);
+const _isLocal =
+  _LOCAL_HOSTS.has(window.location.hostname) ||
+  window.location.protocol === "file:";
+
 const BASE_API_URL =
-  window.location.hostname === "localhost"
+  window.__API_BASE_URL ||
+  (_isLocal
     ? "http://localhost:3002"
-    : "https://two02270440-aymanmusalli-assignment03.onrender.com";
+    : "https://two02270440-aymanmusalli-assignment03.onrender.com");
 
 /*
 |--------------------------------------------------------------------------
