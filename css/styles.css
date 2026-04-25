@@ -2151,6 +2151,11 @@ html[data-theme="dark"] .code-display {
     width: 50px;
     height: 50px;
   }
+
+  .back-to-top {
+    bottom: 6.5rem;
+    right: 1rem;
+  }
 }
 
 /* ===== RESPONSIVE ===== */
