@@ -16,6 +16,12 @@ const BASE_API_URL =
     ? "http://localhost:3002"
     : "https://two02270440-aymanmusalli-assignment03.onrender.com");
 
+    // Pre-warm the backend as early as possible so any Render cold-start
+// overlaps with the browser parsing/rendering the rest of the page.
+if (!_isLocal) {
+  fetch(`${BASE_API_URL}/api/health`, { method: "GET" }).catch(() => {});
+}
+
 /*
 |--------------------------------------------------------------------------
 | THEME MANAGEMENT
@@ -892,6 +898,32 @@ function toggleChatPanel() {
 | Fetches repositories from GitHub API and displays them dynamically.
 | Includes error handling and loading states.
 */
+const REPOS_CACHE_KEY = "gh_repos_cache";
+const REPOS_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+function getReposFromLocalCache() {
+  try {
+    const raw = localStorage.getItem(REPOS_CACHE_KEY);
+    if (!raw) return null;
+    const { data, expiresAt } = JSON.parse(raw);
+    if (Date.now() > expiresAt) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setReposInLocalCache(repos) {
+  try {
+    localStorage.setItem(
+      REPOS_CACHE_KEY,
+      JSON.stringify({ data: repos, expiresAt: Date.now() + REPOS_CACHE_TTL_MS })
+    );
+  } catch {
+    // Storage quota exceeded or private browsing — ignore
+  }
+}
+
 async function initGitHubRepos() {
   const container = document.getElementById("reposContainer");
   const loading = document.getElementById("reposLoading");
@@ -904,6 +936,15 @@ async function initGitHubRepos() {
     loading.classList.remove("hidden");
     error.classList.add("hidden");
     container.innerHTML = "";
+
+    // Serve from localStorage cache for instant repeat loads
+    const cached = getReposFromLocalCache();
+    if (cached && cached.length > 0) {
+      loading.classList.add("hidden");
+      cached.forEach((repo) => container.appendChild(createRepoCard(repo)));
+      container.querySelectorAll(".reveal").forEach((el) => el.classList.add("visible"));
+      return;
+    }
 
     // Fetch repositories from backend proxy to avoid browser-side GitHub rate limits
     const response = await fetch(`${BASE_API_URL}/api/repos`);
@@ -923,6 +964,9 @@ async function initGitHubRepos() {
 
     // Hide loading state
     loading.classList.add("hidden");
+
+    // Cache in localStorage for fast repeat loads
+    setReposInLocalCache(repos);
 
     // Create repository cards
     repos.forEach((repo) => {
